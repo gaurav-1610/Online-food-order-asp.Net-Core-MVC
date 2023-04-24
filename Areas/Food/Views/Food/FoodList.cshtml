@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "Food";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+
+@using System.Data
+@model DataTable
+
+<div  class="col-md-8">
+    <h3 style="font-family:Arial; margin-top:auto;">Food List</h3>
+</div>
+<div style="position:relative; right:09%; float:right" class="col-md-2">
+    <form asp-area="Food" asp-controller="Food" asp-action="Add">
+        <button class="btn btn-success">Add Food</button>
+    </form>
+</div>
+<div class="overflow-scroll">
+    <table class="table" id="sample_1">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Food</th>
+                <th>Catogary</th>
+                <th>Price</th>
+                <th>Rate</th>
+                <th>Type</th>
+                <th>Action</th>
+           </tr>
+        </thead>
+        <tbody id="sample_2">
+            @{
+                int i = 1;
+            }
+            @foreach (DataRow dr in Model.Rows)
+            {
+                    <tr>
+                        <td>@i</td>
+                        <td>@dr["Food"]</td>
+                        <td>@dr["Catogary"]</td>
+                        <td>@dr["Price"]</td>
+                        <td>@dr["Rate"]</td>
+                        <td>@dr["Type"]</td>
+                        <td>
+                            <form method="post" asp-area="Food" asp-controller="Food" asp-action="Delete">
+                                <input type="hidden" name="FoodID" value="@Convert.ToInt32(dr["FoodID"])" />
+                                <button type="submit" class="btn btn-danger" asp-area="Food" asp-controller="Food" asp-action="Delete" onclick="return fun1()"><i class="fa fa-close"></i></button>
+                                <button class="btn btn-info" asp-route-FoodID="@Convert.ToInt32(dr["FoodID"])" asp-area="Food" asp-controller="Food" asp-action="Add"><i class="fa fa-edit"></i></button>
+                            </form>
+                        </td>
+@*                        <td><img src="@dr["PhotoPath"]" style="height:100px ; width:100px"></td>
+*@                    </tr>
+                       i = i + 1;
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+    {
+        <script>
+            $(document).ready(function () {
+                $("#sample_1").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#sample_2 tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
+            function fun1() {
+                if (confirm("Are you sure want to delete?")) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        </script>
+}

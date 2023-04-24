@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Catogary Add/Edit";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+
+@model FoodOrder.Areas.CAT_Catogary.Models.CAT_CatogaryModel;
+
+
+<div class="row portlet-body form">
+    <h3 style="margin-top:auto;">Catogary Add / Edit Page</h3>
+    <div class="col-md-2">
+        <h3>@TempData["CatogaryInsertMsg"]</h3>
+        <form method="post" asp-area="CAT_Catogary" asp-controller="CAT_Catogary" asp-action="Save">
+
+            @Html.HiddenFor(x=>x.CatogaryID)
+
+            <div class="form-group">
+                <label>*Catogary</label>
+                <input type="text" class="form-control" asp-for="Catogary" placeholder="Enter Catogary " />
+                <span asp-validation-for="Catogary" class="text-danger"></span>
+            </div>
+            
+            <hr />
+            <div class="text-center">
+                <button formnovalidate="formnovalidate" class="btn btn-danger" asp-area="CAT_Catogary" asp-controller="CAT_Catogary" asp-action="Index">Back</button>
+                <input type="submit" class="btn btn-success " />
+            </div>
+                            
+        </form>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

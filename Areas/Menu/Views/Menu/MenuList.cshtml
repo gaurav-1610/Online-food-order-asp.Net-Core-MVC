@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "MenuList";
+    Layout = "~/Views/Shared/LayoutClient.cshtml";
+}
+@using System.Data
+@model DataTable
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/css/styleSheet.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+    <title>Menu</title>
+</head>
+<body>
+    <div class="CartContainer">
+        <div class="Header">
+            <h2  class="Heading">Menu List</h2>
+            <div style="position: absolute;
+              right: 20%;
+              width: 30px;
+              height: 30px;">
+                <h5 style="font-size:30px"><a class="btn-danger" asp-area="Cart" asp-controller="Cart" asp-action="CartList">Cart</a></h5>
+            </div>
+        </div>
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <div class="Cart-Items">
+                <div class="image-box">
+                    <img img src="@dr["Photopath"]" style={{ height="70px" }} />
+                </div>
+                <div class="about">
+                    <h1 class="title">@dr["Food"]</h1>
+                </div>
+                <div class="prices">
+                    <div class="amount">@dr["Price"]</div>
+                    <div style="text-align:center;" class="save">
+                        <u>
+                            <form method="post" asp-area="Cart" asp-controller="Cart" asp-action="Save">
+                                <input type="hidden" name="FoodID" value="@Convert.ToInt32(dr["FoodID"])" />
+                                
+                                <button class="btn btn-info" asp-route-FoodID="@Convert.ToInt32(dr["FoodID"])" asp-area="Cart" asp-controller="Cart" asp-action="Save">Add to Cart</button>
+                            </form>
+                        </u>
+                    </div>
+                </div>
+            </div>
+        }
+    </divz>
+</body>
+</html>
+<script>
+    
+    
+</script>

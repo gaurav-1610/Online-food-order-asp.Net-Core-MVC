@@ -1,0 +1,30 @@
+﻿@*@{
+    Layout = "_Layout";
+}*@
+
+@*@{
+    bool? isAdmin = ViewBag.isAdmin;
+    Layout = isAdmin.HasValue && isAdmin.Value ? "_Layout" : "LayoutClient";
+}*@
+@{
+     bool? isAdmin = ViewBag.isAdmin;
+    Layout = isAdmin.HasValue && isAdmin.Value ? "_Layout" : "LayoutClient";
+
+
+
+    string controllerName = Context.Request.RouteValues["controller"]?.ToString();
+    string actionName = Context.Request.RouteValues["action"]?.ToString();
+    string layout = "LayoutClient"; // default layout
+
+    // Set different layout based on the controller or action
+    if (isAdmin==true)
+    {
+        layout = "_Layout";
+    }
+    else
+    {
+        layout = "LayoutClient";
+    }
+
+    Layout = layout;
+}

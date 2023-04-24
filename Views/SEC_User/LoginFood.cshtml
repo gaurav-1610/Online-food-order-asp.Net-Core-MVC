@@ -1,0 +1,46 @@
+﻿@using System.Data;
+@{
+    Layout = "~/Views/Shared/LayoutClient.cshtml";
+}
+@model SEC_UserModel
+<!-- BEGIN LOGO -->
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+
+<div class="content col-md-6" style="align-content:center; text-align:center;margin:10% 35%;">
+
+    <!-- BEGIN LOGIN FORM -->
+    <form style="background-color:#CACFD2 ; border-radius:12px;" class="login-form col-md-6" method="post" asp-controller="SEC_User" asp-action="LoginFood">
+
+        @Html.HiddenFor(x=>x.isAdmin)
+
+        <h3 class="form-title font-green">Sign In</h3>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="text-danger">@Html.Raw(TempData["Error"]) </div>
+        }
+
+        <div style="border: 2px solid black ; border-radius:10px;" class="form-group">
+            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+            @*            <label class="control-label visible-ie8 visible-ie9">Username</label>*@
+            <input style=" border-radius:10px;" class="form-control form-control-solid placeholder-no-fix" type="text" name="UserName" asp-for="UserName" placeholder="Enter Username" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+        <div style="height:15px;"></div>
+        <div style="border: 2px solid black ; border-radius:10px; class="form-group">
+            @*            <label class="control-label visible-ie8 visible-ie9">Password</label>*@
+            <input style=" border-radius:10px;" class="form-control form-control-solid placeholder-no-fix" type="password" name="Password" asp-for="Password" placeholder="Enter Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-actions text-center">
+            <button type="submit" class="btn green uppercase">Login</button>
+        </div>
+    </form>
+    <!-- END LOGIN FORM -->
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

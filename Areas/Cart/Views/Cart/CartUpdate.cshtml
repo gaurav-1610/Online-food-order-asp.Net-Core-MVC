@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Cart Add/Edit";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+
+@model FoodOrder.Areas.Cart.Models.CartModel;
+
+
+<div class="row">
+    <h3 style="margin-top:auto;">Cart Add / Edit Page</h3>
+    <div class="col-md-2">
+        <h3>@TempData["CatogaryInsertMsg"]</h3>
+        <form method="post" asp-area="Cart" asp-controller="Cart" asp-action="Save" enctype="multipart/form-data">
+
+            @Html.HiddenFor(x=>x.CartID)
+            @Html.HiddenFor(x=>x.FoodID)
+            @Html.HiddenFor(x=>x.Quantity)
+
+            <div class="form-group">
+                <label>*Food</label>
+                <input type="text" class="form-control" asp-for="Food" placeholder="Enter Food " />
+                <span asp-validation-for="Food" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>*Catogary</label>
+                @*<input type="text" class="form-control" asp-for="Catogary" placeholder="Enter Catogary " />*@
+                <select class="form-control" asp-for="CatogaryID" asp-items="@(new SelectList(ViewBag.CatogaryList,"CatogaryID","Catogary"))">
+                    <option value="">Select Catogary</option>
+                </select>
+                <span asp-validation-for="CatogaryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>*Quantity</label>
+                <input type="text" class="form-control" asp-for="Quantity" placeholder="Enter Price " />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>*Rate</label>
+                <input type="text" class="form-control" asp-for="Rate" placeholder="Enter Rate " />
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>*Type</label>
+                <input type="text" class="form-control" asp-for="Type" placeholder="Enter Type " />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>PhotoPath</label>
+                <input type="file" class="form-control" asp-for="File" placeholder="Upload File" />
+            </div>
+
+            <hr />
+            <div class="text-center">
+                <button formnovalidate="formnovalidate" class="btn btn-danger" asp-area="Cart" asp-controller="Cart" asp-action="Index">Back</button>
+                <input type="submit" class="btn btn-success " />
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+                function fnOnStateChange() {
+
+                        var CartID = $("#CartID").val();
+
+                        if (CartID !== "") {
+
+                            $.ajax(
+                                {
+                                    type: "POST",
+                                    contentType: "application/json; charset=utf-8",
+                                    url: "@Url.Action("Save","Cart")" + "?&CartID=" + CartID,
+                                data: {},
+                                datatType: "json",
+                                success: function (Result) {
+
+                                },
+                                error: function (r) {
+                                    alert("Error While Loading Dropdown!");
+                                }
+                            }
+                        );
+                    }
+        }
+}

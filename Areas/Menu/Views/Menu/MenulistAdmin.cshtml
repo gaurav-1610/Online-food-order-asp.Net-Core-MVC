@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "MenuList";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+@using System.Data
+@model DataTable
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+    <title>Menu</title>
+</head>
+<body>
+    <table class="table " id="sample_1">
+        <thead>
+            <div style="text-align:center;"><h1>FoodList</h1></div>
+        </thead>
+        <tbody id="sample_2">
+            @foreach (DataRow dr in Model.Rows)
+            {
+                <tr>
+                    <td><img img src="@dr["Photopath"]" style={{ height="70px" }} /></td>
+                    <td><h3 style="font-family:Arial" class="title"> @dr["Food"]</h3></td>
+                    <td><h3 style="font-family:Arial" class="amount">@dr["Price"]</h3></td>
+                    <td>
+                        <form method="post" asp-for="FoodID">
+                            <input type="hidden" name="FoodID" value="@Convert.ToInt32(dr["FoodID"])" />
+                            <button style="margin:20px;" class="btn btn-outline-success add-cart" type="submit" asp-area="Cart" asp-controller="Cart" asp-action="AddCart"> + Add To Cart</button>
+                        </form>
+                    </td>
+                    
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</body>
+</html>
+<script>
+   
+    
+</script>

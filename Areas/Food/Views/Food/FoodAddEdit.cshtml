@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Food Add/Edit";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+
+@model FoodOrder.Areas.Food.Models.FoodModel;
+
+
+<div class="row">
+    <h3 style="margin-top:auto;">Food Add / Edit Page</h3>
+    <div class="col-md-2">
+        <h3>@TempData["CatogaryInsertMsg"]</h3>
+        <form method="post" asp-area="Food" asp-controller="Food" asp-action="Save" enctype="multipart/form-data">
+
+            @Html.HiddenFor(x=>x.FoodID)
+            @Html.HiddenFor(x=>x.PhotoPath)
+
+            <div class="form-group">
+                <label>*Food</label>
+                <input type="text" class="form-control" asp-for="Food" placeholder="Enter Food " />
+                <span asp-validation-for="Food" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>*Catogary</label>
+                @*<input type="text" class="form-control" asp-for="Catogary" placeholder="Enter Catogary " />*@
+                <select class="form-control" asp-for="CatogaryID" asp-items="@(new SelectList(ViewBag.CatogaryList,"CatogaryID","Catogary"))">
+                    <option value="">Select Catogary</option>
+                </select>
+                <span asp-validation-for="CatogaryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>*Price</label>
+                <input type="text" class="form-control" asp-for="Price" placeholder="Enter Price " />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>*Rate</label>
+                <input type="text" class="form-control" asp-for="Rate" placeholder="Enter Rate " />
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>*Type</label>
+                <input type="text" class="form-control" asp-for="Type" placeholder="Enter Type " />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>PhotoPath</label>
+                <input type="file" class="form-control" asp-for="File" placeholder="Upload File" />
+            </div>
+            
+            <hr />
+            <div class="text-center">
+                <button formnovalidate="formnovalidate" class="btn btn-danger" asp-area="Food" asp-controller="Food" asp-action="Index">Back</button>
+                <input type="submit" class="btn btn-success " />
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

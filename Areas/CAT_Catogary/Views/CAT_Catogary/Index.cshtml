@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "Catogary";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+
+@using System.Data
+@model DataTable
+
+<div style="" class="col-md-12 ">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 style="font-family:Arial; margin-top:auto;">Catogary List</h3>
+        </div>
+        <div style="position:relative; right:19%; float:right" class="col-md-2">
+            <form asp-area="CAT_Catogary" asp-controller="CAT_Catogary" asp-action="Add">
+                <button style="float:right;" class="btn btn-success">Add Catogary</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<div class="text-center">
+    
+    <table class="table " id="sample_1">
+        <thead>
+            <tr ><th  class="text-center">index</th>
+                <th class="text-center">Catogary</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody id="sample_2">
+            @{
+                int i = 1;
+            }
+            @foreach (DataRow dr in Model.Rows)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@dr["Catogary"]</td>
+
+                    <td>
+                        <form style="col-md-6" method="post" asp-area="CAT_Catogary" asp-controller="CAT_Catogary" asp-action="Delete">
+                            <input type="hidden" name="CatogaryID" value="@Convert.ToInt32(dr["CatogaryID"].ToString())" />
+                            <button type="submit" class="btn btn-danger" asp-area="CAT_Catogary" asp-controller="CAT_Catogary" asp-action="Delete" onclick="return fun1()"><i class="fa fa-close"></i></button>
+                            <button class="btn btn-info" asp-route-CatogaryID="@Convert.ToInt32(dr["CatogaryID"])" asp-area="CAT_Catogary" asp-controller="CAT_Catogary" asp-action="Add"><i class="fa fa-edit"></i></button>
+                        </form>
+                    </td>
+                    @*<td>
+                <form method="post" asp-controller="LOC_City" asp-action="Add">
+                <input type="hidden" name="CityID" value="@Convert.ToInt32(dr["CityID"].ToString())" />
+                <button class="btn btn-light" type="submit">Update</button>
+
+                </form>
+                </td>*@
+                </tr>
+                i = i + 1;
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts
+    {
+        <script>
+            $(document).ready(function () {
+                $("#sample_1").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#sample_2 tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
+            function fun1() {
+                if (confirm("Are you sure want to delete?")) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        </script>
+}

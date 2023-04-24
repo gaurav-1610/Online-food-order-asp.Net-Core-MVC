@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Customer";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+
+@using System.Data
+@model DataTable
+
+<div class="col-md-8">
+    <h3 style="font-family:Arial; margin-top:auto;">Customer List</h3>
+</div>@*
+<div style="position:relative; right:09%; float:right" class="col-md-2">
+    <form asp-area="Food" asp-controller="Food" asp-action="Add">
+        <button class="btn btn-success">Add Food</button>
+    </form>
+</div>*@
+<div class="overflow-scroll">
+    <table class="table" id="sample_1">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>CustomerName</th>
+                <th>OrderDate</th>
+        
+            </tr>
+        </thead>
+        <tbody id="sample_2">
+            @{
+                int i = 1;
+            }
+            @foreach (DataRow dr in Model.Rows)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@dr["Name"]</td>
+                    <td>@Convert.ToDateTime(dr["OrderDate"]).ToString("dd-MM-yyyy")</td>
+
+                   @* <td>
+                        <form method="post" asp-area="Payment" asp-controller="Payment" asp-action="Delete">
+                            <input type="hidden" name="OrderID" value="@Convert.ToInt32(dr["OrderID"])" />
+                            <button type="submit" class="btn btn-danger" asp-area="Payment" asp-controller="Payment" asp-action="OrderDelete" onclick="return fun1()"><i class="fa fa-close"></i></button>
+                        </form>
+                    </td>*@
+                    @*                        <td><img src="@dr["PhotoPath"]" style="height:100px ; width:100px"></td>
+                *@
+                </tr>
+                i++;
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        function fun1() {
+            if (confirm("Are you sure want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}

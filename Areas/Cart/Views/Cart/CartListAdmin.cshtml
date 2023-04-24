@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "CartList";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+
+}
+@using System.Data
+@using System.Collections.Generic
+@using FoodOrder.Areas.Food.Models;
+@model List<FoodModel>
+@{
+    decimal total = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cart</title>
+</head>
+<body>
+    <div class="CartContainer">
+        @*<div class="Header">
+            <h2  class="Heading">Cart</h2>
+            <h5  class="Action"><a class="btn-danger" asp-area="Cart" asp-controller="Cart" asp-action="RemoveAll">Remove All</a></h5>
+            <a class="btn-danger" asp-area="Menu" asp-controller="Menu" asp-action="Index">Back</a>
+            <h5 class="Action"><a class="btn-danger" asp-area="Menu" asp-controller="Menu" asp-action="Index">Continue Ordering</a></h5>
+
+        </div> *@
+        
+        <table class="table " id="sample_1">
+            
+            <thead>
+                <div style="text-align:center;">
+                    <h1 style="font-family:Arial">CartList</h1>
+                    </div>
+                <div style="text-align:right; margin:10px;">
+                    <h5 style="font-family:Arial margin:10px;" class="Action"><a class="btn-danger" asp-area="Cart" asp-controller="Cart" asp-action="RemoveAllAdmin">Remove All</a></h5>
+                    <a style="font-family:Arial margin:10px;" class="btn-danger" asp-area="Menu" asp-controller="Menu" asp-action="MenuListAdmin">Back</a>
+                </div>
+            </thead>
+            <tbody id="sample_2">
+                <form id="myForm" asp-area="Cart" asp-controller="Cart" asp-action="Save">
+                   
+                    @foreach (var dr in Model)
+                    {
+                        
+                    <tr>
+                        <td><img img src="@dr.PhotoPath" style={{ height="70px" }} /></td>
+                        <td><h3 style="font-family:Arial" class="title"> @dr.Food</h3></td>
+                        <td><div style="font-family:Arial" class="amount"><h3 style="font-family:Arial">@dr.Price</h3></div></td>
+                        <td>
+                            @*<div style="font-family:Arial ;float:left" id="btnDec" class="btn btn-danger" onclick="dec();">-</div>*@
+                            <form method="post">
+                                <input type="hidden" name="FoodID" value="@dr.FoodID">
+                                <input type="hidden" name="action" value="decrement">
+                                <button style="float:left;" type="submit" asp-area="Cart" asp-controller="Cart" asp-action="Updatecart" class="btn btn-danger minus" onclick="price(@dr.FoodID)">
+                                    -
+                                </button>
+                            </form>
+                            <div style="font-family:Arial ;float:left" class="count">@dr.Quantity</div>
+                            @*<div style="font-family:Arial ;float:left" id="btnInc" class="btn g btn-success" onclick="inc();">+</div>*@
+                            <form method="post">
+                                <input type="hidden" name="FoodID" value="@dr.FoodID">
+                                <input type="hidden" name="action" value="increment">
+                                <button style="floar:left;" type="submit" asp-area="Cart" asp-controller="Cart" asp-action="Updatecart" class="btn btn-success plus" onclick="price(@dr.FoodID)">
+                                    +
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="prices">
+                                <div class="amount">@dr.Price</div>
+                            </div>
+                            <div class="prices">
+                                <div class="amount">@dr.SubTotal</div>
+                            </div>
+                        </td>
+
+                    </tr>
+                        total += dr.SubTotal;
+                    }
+                   
+                </form>
+
+            </tbody>
+                        
+        </table>
+        <div style="text-align:center;">
+            <div class="amount"><h1>total price : @total Rs   </h1></div>
+            <div style="padding-bottom: 10px;
+                            width: 100px;
+                            margin-bottom: 30px;" class="btn ">
+                <a asp-area="Payment" asp-controller="Payment" asp-action="PaymentListAdmin">PayNow</a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
