@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using System.Data;
 using System.Data.Common;
-using System.Data.Common;
 
 
 namespace FoodOrder.Areas.Payment.Controllers
