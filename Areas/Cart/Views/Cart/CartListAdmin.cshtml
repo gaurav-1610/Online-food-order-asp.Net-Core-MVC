@@ -83,11 +83,16 @@
                     </tr>
                         total += dr.SubTotal;
                     }
-                   
+                    
                 </form>
 
             </tbody>
                         
+            @{
+
+                string valueAsString = total.ToString();
+                TempData["total"] = valueAsString;
+            }
         </table>
         <div style="text-align:center;">
             <div class="amount"><h1>total price : @total Rs   </h1></div>

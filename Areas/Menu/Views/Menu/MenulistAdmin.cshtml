@@ -5,6 +5,10 @@
 @using System.Data
 @model DataTable
 
+<script src="sweetalert2.all.min.js"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +34,7 @@
                     <td>
                         <form method="post" asp-for="FoodID">
                             <input type="hidden" name="FoodID" value="@Convert.ToInt32(dr["FoodID"])" />
-                            <button style="margin:20px;" class="btn btn-outline-success add-cart" type="submit" asp-area="Cart" asp-controller="Cart" asp-action="AddCart"> + Add To Cart</button>
+                            <button onclick="sweet()" style="margin:20px;" class="btn btn-outline-success add-cart" type="submit" asp-area="Cart" asp-controller="Cart" asp-action="AddCart"> + Add To Cart</button>
                         </form>
                     </td>
                     
@@ -41,7 +45,15 @@
     </table>
 </body>
 </html>
-<script>
-   
-    
-</script>
+@section Scripts
+    {
+    <script>
+        function sweet() {
+            Swal.fire(
+                'Add to cart successfully',
+                'check your card',
+                'success'
+            )
+        }
+    </script>
+}

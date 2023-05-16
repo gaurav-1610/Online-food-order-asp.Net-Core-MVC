@@ -13,19 +13,15 @@
         <form method="post" asp-area="Payment" asp-controller="Payment" asp-action="Save" enctype="multipart/form-data">
 
             @Html.HiddenFor(x=>x.PaymentID)
+            @{
+                var total = TempData["total"];
+            }
 
             <div class="container col-md-4">
                 <div id="Checkout" class="inline">
                     <h1>Pay Invoice</h1>
-
-                    <div class="form-group">
-                       
-                        <div class="amount-placeholder">
-                            <span>RS</span>
-                            <input type="text" class="form-control" asp-for="ReceivedAmount" maxlength="255" placeholder="amount" />
-                            <span asp-validation-for="ReceivedAmount" class="text-danger"></span>
-                        </div>
-                    </div>
+                    <input type="hidden" name="ReceivedAmount" value="@total">
+                    
                     <div class="form-group">
                         <label or="NameOnCard">Name on card</label>
                         <input type="text" class="form-control" asp-for="cardName" maxlength="255" placeholder="Name on Card " />
@@ -47,7 +43,8 @@
 
                     <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit">
                         <span class="submit-button-lock"></span>
-                        <span class="align-middle">Pay $500.00</span>
+
+                        <span class="align-middle">@total Rs</span>
                         <button style="margin:10px;" formnovalidate="formnovalidate" class="btn btn-danger" asp-area="Cart" asp-controller="Cart" asp-action="CartListAdmin">Back</button>
                     </button>
                 </div>

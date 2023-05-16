@@ -3,6 +3,9 @@
     Layout = "~/Views/Shared/LayoutClient.cshtml";
 
 }
+<script src="sweetalert2.all.min.js"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
 
 @using System.Data
 @model DataTable
@@ -78,7 +81,7 @@
                                                             <div  style="text-align:center; font-size:14px;" class="quick-view">
                                                         <form method="post" asp-for="FoodID">
                                                             <input type="hidden" name="FoodID" value="@Convert.ToInt32(dr["FoodID"])" />
-                                                            <button  class="btn btn-outline-success add-cart" type="submit" asp-area="Cart" asp-controller="Cart" asp-action="AddCart"> + Add To Cart</button>
+                                                            <button onclick="sweet()"  class="btn btn-outline-success add-cart" type="submit" asp-area="Cart" asp-controller="Cart" asp-action="AddCart"> + Add To Cart</button>
                                                         </form>
 @*                                                        <button class="btn btn-info"><a asp-route-FoodID="@Convert.ToInt32(dr["FoodID"])" asp-area="Cart" asp-controller="Cart" asp-action="Save">Add to Cart</a></button>
 *@                                                            
@@ -101,17 +104,12 @@
 @section Scripts
     {
     <script>
-        function loadNewView() {
-            $.ajax({
-                url: "/path/to/controller/action",
-                type: "GET",
-                success: function (html) {
-                    $("#container").html(html);
-                },
-                error: function () {
-                    alert("Error loading view");
-                }
-            });
+        function sweet() {
+            Swal.fire(
+                'Add to cart successfully',
+                'check your card',
+                'success'
+            )
         }
 
 
