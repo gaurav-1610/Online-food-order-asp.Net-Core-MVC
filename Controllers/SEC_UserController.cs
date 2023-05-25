@@ -24,13 +24,19 @@ namespace FoodOrder.Controllers
         }
         public IActionResult LoginView()
         {
-            return View("Login");
-
+            return View("Registration");
         }
         public IActionResult LoginFood()
         {
+            return View("RegistrationFood");
+        }
+        public IActionResult UserLogin()
+        {
+            return View("Login");
+        }
+        public IActionResult UserLoginFood()
+        {
             return View("LoginFood");
-
         }
 
         [HttpPost]
@@ -38,6 +44,10 @@ namespace FoodOrder.Controllers
         {
             string connstr = this.Configuration.GetConnectionString("MyConnetionString");
             string error = null;
+
+            SEC_DAL dal_reg = new SEC_DAL();
+            DataTable dt_reg = dal_reg.PR_REG_Registration_Insert(connstr, modelSEC_User);
+
             if (modelSEC_User.UserName == null)
             {
                 error += "User Name is required";
@@ -70,7 +80,7 @@ namespace FoodOrder.Controllers
                 else
                 {
                     TempData["Error"] = "User Name or Password is invalid!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserLogin");
                 }
                 if (HttpContext.Session.GetString("UserName") != null && HttpContext.Session.GetString("Password") != null)
                 {
@@ -87,6 +97,7 @@ namespace FoodOrder.Controllers
         {
             string connstr = this.Configuration.GetConnectionString("MyConnetionString");
             string error = null;
+
             if (modelSEC_User.UserName == null)
             {
                 error += "User Name is required";
@@ -119,7 +130,7 @@ namespace FoodOrder.Controllers
                 else
                 {
                     TempData["Error"] = "User Name or Password is invalid!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("UserLoginFood");
                 }
                 if (HttpContext.Session.GetString("UserName") != null && HttpContext.Session.GetString("Password") != null)
                 {

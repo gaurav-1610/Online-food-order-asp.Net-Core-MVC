@@ -60,24 +60,28 @@ namespace FoodOrder.DAL
         #endregion
 
         #region Method: PR_REG_Registration_Insert
-        public decimal? PR_REG_Registration_Insert(string ConnStr,string UserName, string Password, string FirstName, string LastName, string Email , string Address)
+        public DataTable PR_REG_Registration_Insert(string ConnStr,SEC_UserModel modelSEC_UserModel)
         {
             try
             {
                 SqlDatabase sqlDB = new SqlDatabase(ConnStr);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("dbo.PR_REG_Registration_Insert");
-                sqlDB.AddInParameter(dbCMD, "UserName", SqlDbType.VarChar, UserName);
-                sqlDB.AddInParameter(dbCMD, "FirstName", SqlDbType.VarChar, FirstName);
-                sqlDB.AddInParameter(dbCMD, "LastName", SqlDbType.VarChar, LastName);
-                sqlDB.AddInParameter(dbCMD, "Password", SqlDbType.VarChar, Password);
-                sqlDB.AddInParameter(dbCMD, "Email", SqlDbType.VarChar, FirstName);
-                sqlDB.AddInParameter(dbCMD, "Address", SqlDbType.VarChar, LastName);
+                sqlDB.AddInParameter(dbCMD, "UserName", SqlDbType.VarChar, modelSEC_UserModel.UserName);
+                sqlDB.AddInParameter(dbCMD, "FirstName", SqlDbType.VarChar, modelSEC_UserModel.FirstName);
+                sqlDB.AddInParameter(dbCMD, "LastName", SqlDbType.VarChar, modelSEC_UserModel.LastName);
+                sqlDB.AddInParameter(dbCMD, "Password", SqlDbType.VarChar, modelSEC_UserModel.Password);
+                sqlDB.AddInParameter(dbCMD, "Email", SqlDbType.VarChar, modelSEC_UserModel.Email);
+                sqlDB.AddInParameter(dbCMD, "Address", SqlDbType.VarChar, modelSEC_UserModel.Address);
+                sqlDB.AddInParameter(dbCMD, "isAdmin", SqlDbType.Bit, modelSEC_UserModel.isAdmin);
 
-                var vResult = sqlDB.ExecuteScalar(dbCMD);
-                if (vResult == null)
-                    return null;
 
-                return (decimal)Convert.ChangeType(vResult, vResult.GetType());
+                DataTable dt = new DataTable();
+
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+                return dt;
             }
             catch (Exception ex)
             {
